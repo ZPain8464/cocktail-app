@@ -1,0 +1,36 @@
+main {
+    width: 100%;
+    margin-left: 30%;
+    margin-top: 15%;
+}
+
+/* Dropdown Container */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/*  ingredients dropdown content  */
+
+#ingredients-dropdown {
+    display: none;
+    position: absolute;
+}
+
+/* Links in the dropdown */
+
+#ingredients-dropdown option {
+    color: black;
+    display: block;
+    padding: 12px 16px;
+}
+
+.dropdown:hover #ingredients-dropdown {
+    display: block;
+}
+
+.hidden {
+    display: none;
+    display: block;
+}
