@@ -25,53 +25,91 @@ function renderDropDown() {
     $(selectedItems());
 }
 
-//Passes two Promises as arguments
-//Appends drink suggestion with ingredients and basic instructions
-function displayIngredients(responseJson, newDrinkIDJson) {
-    console.log(newDrinkIDJson.drinks)
+//Passes Promise as an argument
+//Creates dynamic list of drink suggestions
+function displayDrinks(responseJson) {
     $('#result').empty();
-    for (let i = 0; i < newDrinkIDJson.drinks.length; i++) {
-            $('#result').append(`
-      <h3>${responseJson.drinks[0].strDrink}</h3>
-        <ul>
-          <li>${newDrinkIDJson.drinks[0].strIngredient1}<span>&nbsp${newDrinkIDJson.drinks[0].strMeasure1}</span></li>
-          <li>${newDrinkIDJson.drinks[0].strIngredient2}<span>&nbsp${newDrinkIDJson.drinks[0].strMeasure2}</span></li>
+    $('#result').append(`
+    <div class="js-drink-name"></div>
+         <ul>
+           <li class="drink-name"></li>
+         </ul>
+     `)
+    responseJson.drinks.forEach(function(drinkName, drinkIndex) {
+        $(`.drink-name`).append(`
+            <h3>${drinkName.strDrink}</h3>
+            <button class="ing-button" id="drinkItem-${drinkIndex}" value="${drinkName.idDrink}">Get Ingredients</button>
+            <div class="js-ingredients"></div>
+        `);
+        $(`#drinkItem-${drinkIndex}`).on('click', function() {
+            let drinkID = $(this).val();
+            $(fetchIngredients(drinkID));
+        });
+    })
+}
+
+
+// Passes drink ID as an argument
+//Empties DropDown list and fetches drink ID 
+function fetchIngredients(drinkID) {
+    $('.js-dropdown').empty();
+        let newURL = searchURL + `lookup.php?i=${drinkID}`;
+        console.log(newURL)
+            fetch(newURL)
+            .then(newDrinkID => newDrinkID.json())
+            .then(newDrinkIDJson => displayIngredients(newDrinkIDJson));
+}
+
+// Creates HTML template for presenting ingredients and instructions for specified drink
+function ingredientsTemplate() {
+   return $('.js-ingredients-template').append(`
+    <h2 class="targetDrink"></h2>
+    <h3>Ingredients:</h3>
+        <ul class="targetIngredients">
         </ul>
-    <p>${newDrinkIDJson.drinks[0].strInstructions}</p> 
-    `);
-    }
+    <h3>Instructions</h3>
+        <p class="targetInstructions"></p>
+        `)
+}
+
+// Renders ingredients and instructions to DOM
+function displayIngredients(newDrinkIDJson) {
+    console.log(newDrinkIDJson)
+    let drinkDeets = newDrinkIDJson.drinks[0];
+    $(ingredientsTemplate());
+    $('.targetDrink').append(`${drinkDeets.strDrink}`);
+    $('.targetIngredients').append(`
+        <li>${newDrinkIDJson.drinks[0].strIngredient1}</li>
+        <li>${newDrinkIDJson.drinks[0].strIngredient2}</li>`)
+    $('.targetInstructions').append(`${newDrinkIDJson.drinks[0].strInstructions}
+    <img class="js-image" src="${drinkDeets.strDrinkThumb}">`)
 }
 
 
 // Verifies user's selection in dropdown menu
-// After clicking submit, it calls fetchAPIPromises()
+// After clicking submit, it calls fetchDrinks
 function selectedItems() {
     $('#ingredients-dropdown').change(function() {
         let selected = $(this).val();
         console.log(selected);
         $('#result').html(selected);
         $('#submit').on('click', function() {
-            $(fetchPromises(selected));
+            $(fetchDrinks(selected));
         })
     })
 }
 
 //Passes user's selected item as argument;
-//Fetches two separate API endpoints to retrieve drinkID and ingredients
+//Fetches selected item to retrieve drinkID and ingredients
 //Calls displayDrinks to render to DOM
-function fetchPromises(selected) {
+function fetchDrinks(selected) {
     let URL = searchURL + `filter.php?i=${selected}`;
             fetch(URL)
             .then(function(response) {
                 return response.json();
-            }).then(function(responseJson) {
-            let drinkID = responseJson.drinks[0].idDrink;
-            let newURL = searchURL + `lookup.php?i=${drinkID}`;
-            fetch(newURL)
-            .then(newDrinkID => newDrinkID.json())
-            .then(newDrinkIDJson => displayIngredients(responseJson, newDrinkIDJson));
-            });
+            }).then(responseJson => displayDrinks(responseJson));
 }
+
 
 
 // User's mouse hovers over ul text; code fades out message and 
