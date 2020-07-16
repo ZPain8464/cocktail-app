@@ -34,3 +34,13 @@ main {
     display: none;
     display: block;
 }
+
+.img-container {
+    width: 350px;
+    height: 220px;
+}
+
+.img-container img {
+    width: 100%;
+    height: auto;
+}

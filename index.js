@@ -10,34 +10,41 @@ const youtubeURL = "https://www.googleapis.com/youtube/v3/search?";
 const watchVidURL = "https://www.youtube.com/watch?v=";
 
 
-
+// Fetches ingredients list from cocktail API
 function fetchDropDown() {
     let ingURL = searchURL + 'list.php?i=list';
     fetch(ingURL)
     .then(ingredients => ingredients.json())
     .then(function (ingredientsJson) {
-        console.log(ingredientsJson)
+        $(generateDropOpps(ingredientsJson));
     })
 }
 
+// Dynamically generates dropdown menu ingredients optoins and appends to <option> 
+//Calls selectedItems()
+function generateDropOpps(ingredientsJson) {
+    for (let i = 0; i < ingredientsJson.drinks.length; i++) {
+        let drinks = ingredientsJson.drinks[i].strIngredient1;
+        $('#ingredients-dropdown').append(`<option value="${drinks}">${drinks}</option>`);
+    }
+    $(selectedItems());
+}
+
+
 // Creates HTML template for dropdown menu with ingredients
-// Calls selectedItems
+// Calls fetchDropDown()
 function renderDropDown() {
+    $(fetchDropDown());
     $('.js-dropdown').append(
         `<div class="dropdown">
-        <button id="submit">Submit</button>
-        <p>Pick your poison(s):</p>
-            <select id="ingredients-dropdown" multiple size="4">
-                <option value="vodka">Vodka</option>
-                <option value="Cranberry juice">Cranberry juice</option>
-                <option value="Lime">Lime</option>
-                <option value="Tequila">Tequila</option>
+        <p>Pick your poison:</p>
+            <select id="ingredients-dropdown" multiple size="7">
             </select>
             <span id="result"></span>
-            </div>`
+            </div>
+            <button id="submit">Submit</button>
+            `
     ).hide().fadeIn(2000);
-    $(selectedItems());
-
 }
 
 //Passes Promise as an argument
@@ -57,6 +64,7 @@ function displayDrinks(responseJson) {
             <div class="js-ingredients"></div>
         `);
         $(`#drinkItem-${drinkIndex}`).on('click', function() {
+            $('#results').empty()
             let drinkID = $(this).val();
             $(fetchIngredients(drinkID));
         });
@@ -65,9 +73,10 @@ function displayDrinks(responseJson) {
 
 
 // Passes drink ID as an argument
-//Empties DropDown list and fetches drink ID 
+//Empties drink list and fetches drink ID 
 function fetchIngredients(drinkID) {
     $('.js-dropdown').empty();
+    $('#result').empty();
         let newURL = searchURL + `lookup.php?i=${drinkID}`;
             fetch(newURL)
             .then(newDrinkID => newDrinkID.json())
@@ -80,16 +89,20 @@ function ingredientsTemplate() {
     <h2 class="targetDrink"></h2>
     <button class="bar" id="back-to-bar">Back to the Bar</button>
     <h3>Ingredients:</h3>
+
         <ul class="targetIngredients">
         </ul>
     <h3>Instructions:</h3>
         <p class="targetInstructions"></p>
+        <div>
         <img class="js-image">
+        <div>
         <div id="video"></div>
         `)
 }
 
-// Renders ingredients and instructions to DOM 7/14: return strIngredient as a variable and forEach() it in second if statement
+// Renders ingredients and instructions to DOM 
+//Calls backToBar function, which brings user back to dropdown screen
 function displayIngredients(newDrinkIDJson) {
     let drinkDeets = newDrinkIDJson.drinks[0];
     $(ingredientsTemplate());
@@ -101,10 +114,12 @@ function displayIngredients(newDrinkIDJson) {
             };
         };
     $('.targetInstructions').append(`${drinkDeets.strInstructions}
-    <img class="js-image" src="${drinkDeets.strDrinkThumb}">`);
+    <div class="img-container">
+    <img class="js-image" src="${drinkDeets.strDrinkThumb}">
+    </div>`);
     $(fetchVideos(newDrinkIDJson));
+    $('#results').empty()
     $(backToBar())
-    // $(displayMeasurements(ingredients));
 }
  
 // pass in newDrinkISJson as an argument; extract 'strDrink' and plug into YouYube q = "how to make ${strDrink}"
@@ -118,7 +133,7 @@ function fetchVideos(newDrinkIDJson) {
 
 function videosTemplate(vidID) {
     return `
-    <iframe width="420" height="315"
+    <iframe width="320" height="215"
     src="https://www.youtube.com/embed/${vidID}">
     </iframe>
     `
@@ -133,25 +148,13 @@ function displayVideos(videosJson) {
     };
 }
 
+//Resets app and calls renderDropDown
 function backToBar() {
     $('.bar').on('click', function() {
         $('.js-ingredients-template').empty()
         $(renderDropDown());
     })
 }
-
-// Modify this function to dynamically create li list under separate URL; 
-// manipulate CSS to display both ul lists next to each other?
-// function displayMeasurements(ingredients) {
-//     console.log(ingredients)
-//     // let drinkDeets = newDrinkIDJson.drinks[0];
-//     // let reqMeas = Object.entries(drinkDeets);
-//     for (const [k , v] of reqMeas) {
-//         if (k.indexOf("strMeasure") > -1 && v !== null) {      
-//         $('.js-measurements').append(`<span>${v}</span>`)   
-//         }
-//     }
-// }
 
 // Verifies user's selection in dropdown menu
 // After clicking submit, it calls fetchDrinks
@@ -161,6 +164,8 @@ function selectedItems() {
         $('#result').html(selected);
         $('#submit').on('click', function() {
             $(fetchDrinks(selected));
+            $('#results').empty();
+            $('#ingredients-dropdown').hide()
         })
     })
 }
@@ -174,6 +179,7 @@ function fetchDrinks(selected) {
             .then(function(response) {
                 return response.json();
             }).then(responseJson => displayDrinks(responseJson));
+            $('#results').empty()
 }
 
 
