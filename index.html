@@ -4,20 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bar Cart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
     <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
     <main>
-        <h1>Bar Cart: Your Virtual Cocktail Assistant</h1>
-        <div class="js-ingredients-template"></div>
-        <div class="welcome-message">
-        <ul>
-            <li>Select any ingredients you have at home</li>
-            <li>Your virtual mixologist will suggest a drink
-        </ul>
+        <div class="wrapper">
+            <div class="start-container">
+            <h1 id="logo">Bar Cart</h1>
+            <h2 class="virtual-assistant">Your Virtual Cocktail Assistant</h2>
+            <div class="js-ingredients-template"></div>
+            <div class="welcome-message">
+                <div class="fade-instructions">
+                    <p>Select an ingredient from the list</p>
+                    <p>Your virtual mixologist will suggest a drink</p>
+                </div>
+                <button id="start">Sounds good!</button>
+            </div>
+            <div class="js-dropdown hidden"></div>
+            </div>
         </div>
-        <div class="js-dropdown hidden"></div>
     </main>
     
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>    

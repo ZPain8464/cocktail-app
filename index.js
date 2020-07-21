@@ -37,26 +37,32 @@ function renderDropDown() {
     $(fetchDropDown());
     $('.js-dropdown').append(
         `<div class="dropdown">
-        <p>Pick your poison:</p>
+        <p class="poison">Pick your poison:</p>
             <select id="ingredients-dropdown" multiple size="7">
             </select>
             <span id="result"></span>
             </div>
+            <div class="submit-button">
             <button id="submit">Submit</button>
+            </div>
             `
-    ).hide().fadeIn(2000);
+    ).hide().fadeIn(4000);
 }
 
 //Passes Promise as an argument
 //Creates dynamic list of drink suggestions
-function displayDrinks(responseJson) {
+function displayDrinks(responseJson, selected) {
     $('#result').empty();
+    $('#submit-button').hide();
+    $('.poison').replaceWith(`
+    <p>You chose ${selected} (good choice!)</p>
+    <p>Choose your drink:</p>`)
     $('#result').append(`
     <div class="js-drink-name"></div>
-         <ul>
+         <ul class="drinks-list">
            <li class="drink-name"></li>
          </ul>
-     `)
+     `);
     responseJson.drinks.forEach(function(drinkName, drinkIndex) {
         $(`.drink-name`).append(`
             <h3>${drinkName.strDrink}</h3>
@@ -68,7 +74,7 @@ function displayDrinks(responseJson) {
             let drinkID = $(this).val();
             $(fetchIngredients(drinkID));
         });
-    })
+    });
 }
 
 
@@ -80,7 +86,7 @@ function fetchIngredients(drinkID) {
         let newURL = searchURL + `lookup.php?i=${drinkID}`;
             fetch(newURL)
             .then(newDrinkID => newDrinkID.json())
-            .then(newDrinkIDJson => displayIngredients(newDrinkIDJson));
+            .then(newDrinkIDJson => displayIngredients(newDrinkIDJson))
 }
 
 // Creates HTML template for presenting ingredients and instructions for specified drink
@@ -88,17 +94,26 @@ function ingredientsTemplate() {
    return $('.js-ingredients-template').append(`
     <h2 class="targetDrink"></h2>
     <button class="bar" id="back-to-bar">Back to the Bar</button>
-    <h3>Ingredients:</h3>
+    <div class="ing-group">
+    <div class="ing-item">
+    <h3 id="ing-h3">Ingredients:</h3>
 
         <ul class="targetIngredients">
         </ul>
-    <h3>Instructions:</h3>
+        </div>
+        <div class="meas-item">
+    <h3 class="meas-h3">Measurements:</h3>
+        <ul class="targetMeasurements">
+        </ul>
+        </div>
+        </div>
+    <h3 class="ins-h3">Instructions:</h3>
         <p class="targetInstructions"></p>
-        <div>
-        <img class="js-image">
-        <div>
+        <div class="js-img-container>
+        <img class="js-image" >
+        </div>
         <div id="video"></div>
-        `)
+        `);
 }
 
 // Renders ingredients and instructions to DOM 
@@ -117,9 +132,21 @@ function displayIngredients(newDrinkIDJson) {
     <div class="img-container">
     <img class="js-image" src="${drinkDeets.strDrinkThumb}">
     </div>`);
+    $(displayMeasurements(newDrinkIDJson))
     $(fetchVideos(newDrinkIDJson));
     $('#results').empty()
     $(backToBar())
+}
+
+function displayMeasurements(newDrinkIDJson) {
+    let drinkDeets = newDrinkIDJson.drinks[0];
+    console.log(drinkDeets)
+    let reqMeas = Object.entries(drinkDeets);
+    for (const [k , v] of reqMeas) {
+        if (k.indexOf('strMeasure') > -1 && v !== null) {
+            $('.targetMeasurements').append(`<li>${v}</li>`)
+        };
+    };
 }
  
 // pass in newDrinkISJson as an argument; extract 'strDrink' and plug into YouYube q = "how to make ${strDrink}"
@@ -152,6 +179,7 @@ function displayVideos(videosJson) {
 function backToBar() {
     $('.bar').on('click', function() {
         $('.js-ingredients-template').empty()
+        $('logo-msg').show();
         $(renderDropDown());
     })
 }
@@ -161,7 +189,7 @@ function backToBar() {
 function selectedItems() {
     $('#ingredients-dropdown').change(function() {
         let selected = $(this).val();
-        $('#result').html(selected);
+        $('#result').html(`<p>${selected}</p>`);
         $('#submit').on('click', function() {
             $(fetchDrinks(selected));
             $('#results').empty();
@@ -178,7 +206,7 @@ function fetchDrinks(selected) {
             fetch(URL)
             .then(function(response) {
                 return response.json();
-            }).then(responseJson => displayDrinks(responseJson));
+            }).then(responseJson => displayDrinks(responseJson, selected));
             $('#results').empty()
 }
 
@@ -187,10 +215,13 @@ function fetchDrinks(selected) {
 // User's mouse hovers over ul text; code fades out message and 
 // calls renderDropDown
 function startApp() {
-    $('.welcome-message').mouseenter( function(event) {
+    $('#start').on('click', function(event) {
         event.preventDefault();
         $(this).fadeOut(1000);
-        $(renderDropDown())
+        $('.welcome-message').fadeOut(1000);
+        $('.virtual-assistant').fadeOut(1000);
+        $('#logo').animate({marginTop: '-=100px',}, 'slow');
+        $(renderDropDown());
     })
 }
 

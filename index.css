@@ -1,8 +1,73 @@
-main {
-    width: 100%;
-    margin-left: 30%;
-    margin-top: 15%;
+
+
+:root {
+    font-size: 13px;
 }
+
+.wrapper {
+    max-width: 425px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin: 0 auto;
+}
+
+
+/* Fonts and Colors */
+
+h1, .virtual-assistant, p {
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.virtual-assistant {
+    color: #E71D36;
+    font-size: 2rem;
+}
+
+p {
+    color: #F19F1C;
+    font-size: 1.4rem;
+}
+
+h1 {
+    color: #2EC4B6;
+    font-size: 4rem;
+    border: #2EC4B6 solid 0.5rem;
+    border-radius: 2rem;
+}
+
+/* Fadein Animation: Opening screen */
+body { 
+	animation: fadeInAnimation ease 3s; 
+	animation-iteration-count: 1; 
+	animation-fill-mode: forwards; 
+} 
+
+@keyframes fadeInAnimation { 
+	0% { 
+		opacity: 0; 
+	} 
+	100% { 
+		opacity: 1; 
+	} 
+} 
+
+.fade-instructions p,
+#start {
+    list-style-type: none;
+    animation: fadeIn ease 4s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 
 /* Dropdown Container */
 
@@ -11,29 +76,93 @@ main {
     display: inline-block;
 }
 
-/*  ingredients dropdown content  */
-
 #ingredients-dropdown {
-    display: none;
-    position: absolute;
+    position: relative;
+    border: #ff595e solid 0.4rem;
+    border-radius: 1.2rem;
+    margin: 0 auto;
+    display: block;
+    width: 85%;
 }
 
-/* Links in the dropdown */
-
 #ingredients-dropdown option {
-    color: black;
+    color: #F19F1C;
     display: block;
     padding: 12px 16px;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 .dropdown:hover #ingredients-dropdown {
     display: block;
+    color: #f7af9d;
 }
 
 .hidden {
     display: none;
     display: block;
 }
+
+/* Drink Selection */
+
+ul {
+    list-style-type: none;
+}
+
+.drinks-list ul {
+    margin: auto;
+}
+
+/* Ingredients Template Screen */
+
+.targetIngredients {
+    display: block;
+    width: 25%;
+    margin-right: 3.9rem;
+    text-align: left;
+    /* border: green solid 0.1rem; */
+}
+
+#ing-h3 {
+    width: 25%;
+    margin-left: 1.2rem;
+    /* border: green solid 0.5rem; */
+}
+
+.meas-h3 {
+    width: 25%;
+    /* border: red solid 0.5rem; */
+
+}
+
+.ing-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* border:solid 0.5rem; */
+}
+
+.ing-item li {
+    display: inline-block;
+    width: 50%;
+    height: 5rem;
+    flex: 1;
+    line-height: 1rem;
+    padding: 0.1rem;
+}
+
+
+
+.meas-item li {
+    display: inline-block;
+    width: 50%;
+    height: 5rem;
+    flex: 1;
+    line-height: 1rem;
+    padding: 0.1rem;
+}
+
+/* Images and Video */
 
 .img-container {
     width: 350px;
@@ -43,4 +172,244 @@ main {
 .img-container img {
     width: 100%;
     height: auto;
+}
+
+/* Mobile Start Page Layout */
+@media all and (min-width: 320px) and (max-width: 425px) {
+
+    .wrapper {
+        max-width: 425px;
+        padding-right: 10px;
+        padding-left: 10px;
+        margin: 0 auto;
+    }
+
+    :root {
+        font-size: 13px;
+    }
+
+    .virtual-assistant {
+        color: #ff595e;
+        font-size: 2rem;
+    }
+    
+    p {
+        color: #F19F1C;
+        font-size: 1.4rem;
+    }
+    
+    h1 {
+        color: #2EC4B6;
+        font-size: 4rem;
+        border: #2EC4B6 solid 0.5rem;
+        border-radius: 2rem;
+    }
+
+    body {
+        min-height: 100vh;
+        background: linear-gradient(to top, #F19F1C 10%, white 80%);
+    }
+
+    .start-container {
+        width: 90%;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 10rem;    
+    }
+       /* Buttons */
+
+    #start {
+        color: white;
+        background-color: #2EC4B6;
+        font-size: 1.8rem;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-weight: 100 bolder;
+        padding: 0.5rem;
+        border: #2EC4B6 solid 0.8rem;
+        border-radius: 2rem;
+        cursor: pointer;
+    }
+
+    #submit {
+        color: white;
+        background-color: #2EC4B6;
+        font-size: 1.8rem;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-weight: 100 bolder;
+        padding: 0.3rem;
+        border: #2EC4B6 solid 0.8rem;
+        border-radius: 2rem;
+        margin-top: 1rem;
+        cursor: pointer;
+    }
+
+    .ing-button {
+        color: white;
+        background-color: #724cf9;
+        font-size: 1.5rem;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-weight: 100 bolder;
+        padding: 0.1rem;
+        border: #724cf9 solid 0.8rem;
+        border-radius: 2rem;
+        cursor: pointer;
+    }
+
+    #back-to-bar {
+        color: white;
+        background-color: #724cf9;
+        font-size: 1.4rem;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-weight: 100 bolder;
+        padding: 0.3rem;
+        border: #724cf9 solid 0.8rem;
+        border-radius: 2rem;
+        margin-top: 1rem;
+        cursor: pointer;
+    }
+
+    /* Dropdown Page */
+
+    #result p {
+        color: white;
+        font-size: 2rem;
+    }
+
+    .dropdown p {
+        font-size: 2rem;
+    }
+
+    /* Drink Selection Page */
+
+    .drinks-list li {
+        color: #373f51;
+        display: block;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-size: 1.2rem;
+    }
+
+    /* Ingredients Template Screen */
+
+    .targetIngredients {
+        display: block;
+        width: 25%;
+        margin-right: 3.9rem;
+        text-align: left;
+    }
+
+    #ing-h3 {
+        width: 25%;
+        margin-left: 1.2rem;
+        color: #2EC4B6;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-size: 1.5rem;
+    }
+
+    .meas-h3 {
+        width: 25%;
+        color: #2EC4B6;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-size: 1.5rem;
+    }
+
+    .targetDrink {
+        color: #2EC4B6;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-size: 2rem;
+    }
+
+    .ing-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        /* border:solid 0.5rem; */
+    }
+
+    .ing-item li {
+        display: inline-block;
+        width: 50%;
+        height: 5rem;
+        flex: 1;
+        line-height: 1rem;
+        padding: 0.1rem;
+        color: #373f51;
+        font-size: 1.3rem;
+    }
+
+    .meas-item li {
+        display: inline-block;
+        width: 50%;
+        height: 5rem;
+        flex: 1;
+        line-height: 1rem;
+        padding: 0.1rem;
+        color: #373f51;
+        font-size: 1.3rem;
+    }
+
+    .ins-h3 {
+        width: 25%;
+        color: #2EC4B6;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-size: 1.5rem;
+        margin: 0 auto; 
+    }
+
+    .targetInstructions {
+        color: #373f51;
+        font-family: 'Lato', sans-serif;
+    }
+
+    .js-image {
+        width: 25%;
+        margin-top: 2rem;
+        border: #724cf9 0.5rem solid;
+        border-radius: 2rem;
+    }
+
+    }
+
+    /* Tablet Start Page Layout */
+@media all and (min-width: 426px) and (max-width: 768px) {
+
+    .wrapper {
+        max-width: 768;
+        padding-right: 10px;
+        padding-left: 10px;
+        margin: 0 auto;
+    }
+
+    :root {
+        font-size: 16px;
+    }
+
+    .start-container {
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 10rem;
+    }
+}
+
+/* Desktop Start Page Layout */
+
+@media all and (min-width: 769px) and (max-width: 1900px) {
+
+    .wrapper {
+        max-width: 1900px;
+        padding-right: 10px;
+        padding-left: 10px;
+        margin: 0 auto;
+    }
+
+    :root {
+        font-size: 16px;
+    }
+
+    .start-container {
+        width: 80%;
+        margin: 0 auto;
+        /* border: green 1rem solid; */
+        /* figure out layout when you get here */
+    }
 }
