@@ -1,0 +1,442 @@
+/* Mobile-first Layout */
+
+:root {
+    font-size: 14px;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    animation: fadeInAnimation ease 0.3s; 
+	animation-iteration-count: 1; 
+    animation-fill-mode: forwards; 
+    background: linear-gradient(to top, #ffbf69, white);
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+}
+
+.header {
+    text-align: center;
+}
+
+.welcome-message {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+/* Start screen animation */
+
+@keyframes fadeInAnimation { 
+	0% { 
+		opacity: 0; 
+	} 
+	100% { 
+		opacity: 1; 
+	} 
+} 
+
+.fade-instructions p,
+#start {
+    list-style-type: none;
+    animation: fadeIn ease 0.3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Header Styling */
+
+h1, p {
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+h1 {
+    color: #2EC4B6;
+    font-size: 4rem;
+    border: #2EC4B6 solid 0.5rem;
+    border-radius: 2rem;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.header h2 {
+    color: #ff595e;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 2rem;
+}
+
+p {
+    color: #F19F1C;
+    font-size: 1.4rem;
+}
+
+/* Button Styling */
+
+button {
+    width: fit-content;
+}
+
+#start {
+    color: white;
+    background-color: #2EC4B6;
+    font-size: 1.8rem;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 100 bolder;
+    padding: 0.5rem;
+    border: #2EC4B6 solid 0.8rem;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+#submit {
+    color: white;
+    background-color: #2EC4B6;
+    font-size: 1.8rem;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 100 bolder;
+    padding: 0.3rem;
+    border: #2EC4B6 solid 0.8rem;
+    border-radius: 2rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.ing-button {
+    color: white;
+    background-color: #724cf9;
+    font-size: 1.5rem;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 100 bolder;
+    padding: 0.1rem;
+    border: #724cf9 solid 0.8rem;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+#back-to-bar {
+    color: white;
+    background-color: #724cf9;
+    font-size: 1rem;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 100 bolder;
+    padding: 0.3rem;
+    border: #724cf9 solid 0.8rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+/* Dropdown Styling */
+
+#ingredients-dropdown {
+    position: relative;
+    border: #ff595e solid 0.4rem;
+    border-radius: 1.2rem;
+    margin: 0 auto;
+    width: 75%;
+}
+
+#ingredients-dropdown option {
+    color: #F19F1C;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.dropdown:hover #ingredients-dropdown {
+    display: block;
+    color: #f7af9d;
+}
+
+.hidden {
+    display: none;
+    display: block;
+}
+
+
+/* Dropdown Ingredients Screen */
+
+.dropdown {
+    text-align: center;
+}
+
+.submit-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 1.2rem;
+}
+
+/* Choose A Drink Selection Screen */
+
+.drinks-list {
+    list-style-type: none;
+}
+
+#drink-list-results {
+    max-height: 40%;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+.drink-name {
+    color: #373f51;
+    display: block;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 1.2rem;
+}
+
+/* Drink Ingredients Screen */
+
+.targetDrink {
+    /* Selected drink h2 */
+    color: #2EC4B6;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 2rem;
+    text-decoration: underline;
+}
+
+.ing-h3, .meas-h3, .ins-h3 {
+    color: #2EC4B6;
+    font-family: 'Montserrat Alternates', sans-serif;
+    text-align: center;
+}
+
+.targetIngredients {
+    width: 35%;
+}
+
+.targetMeasurements {
+    width: 35%;
+}
+
+.ing-header {
+    text-align: center;
+}
+
+.ing-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    max-height: 20%;
+    overflow-y: scroll;
+}
+
+.item {
+    display: inline-block;
+    flex-direction: column;
+    flex: 1;
+    height: 12rem;
+    
+}
+
+.item li {
+    padding: 0.3rem;
+    list-style-type: none;
+    color: #373f51;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.targetInstructions {
+    text-align: center;
+    font-size: 1rem;
+    color: #373f51;
+    /* border: red solid; */
+}
+
+.ins-section {
+    width: 75%;
+    align-items: center;
+    margin: 0 auto;
+    
+}
+
+/* Img Styling */
+
+.js-image {
+    width: 55%;
+    height: 55%;
+    margin-top: 2rem;
+    border: #724cf9 0.5rem solid;
+    border-radius: 2rem;
+}
+
+/* Tablet Layout */
+@media all and (min-width: 768px) {
+
+    :root {
+        font-size: 18px;
+    }
+
+    .header {
+        font-size: 1.5rem;
+    }
+
+    /* Choose a Drink Selection Screen */
+
+    #drink-list-results {
+        max-height: 40%;
+        overflow-y: scroll;
+        text-align: center;
+    }
+
+    /* Drink Ingredients Screen */
+
+    .ing-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        text-align: center;
+
+        margin-top: 1rem;
+        margin: 0 auto;
+        width: 75%;
+    } 
+
+    .item {
+        display: inline-block;
+        flex-direction: column;
+        flex: 1;
+        height: 10rem;
+    }
+
+    .item li {
+        padding: 0.3rem;
+    }
+    
+
+    .ins-h3, .targetInstructions {
+        text-align: center;
+    }
+
+    .ins-section {
+        height: 25rem;
+        overflow-y: scroll;
+    }
+
+    .ins-h3 {
+        margin-top: 2rem;
+    }
+
+    .targetIngredients, .targetMeasurements {
+        text-align: left;
+        margin-left: 3.5rem;
+    }
+
+    /* Img Styling */
+
+    .js-image {
+        width: 45%;
+        height: 55%;
+        margin-top: 2rem;
+        border: #724cf9 0.5rem solid;
+        border-radius: 2rem;
+    }
+
+}
+
+/* Desktop Layout */
+@media all and (min-width: 769px) {
+
+    :root {
+        font-size: 20;
+    }
+
+    /* Get Ingredients Button */
+
+    .ing-button {
+        color: white;
+        background-color: #724cf9;
+        font-size: 1rem;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-weight: 100 bolder;
+        padding: 0.1rem;
+        border: #724cf9 solid 0.5rem;
+        border-radius: 2rem;
+        cursor: pointer;
+    }
+
+    /* Drink Ingredients Screen */
+
+    .big-group {
+        width: 45rem;
+        margin: 0 auto;
+    }
+
+    .ing-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        text-align: center;
+
+        margin-top: 1rem;
+        margin: 0 auto;
+    } 
+
+    .item {
+        display: inline-block;
+        flex-direction: column;
+        flex: 1;
+        height: 12rem;
+    }
+
+    .targetIngredients, .targetMeasurements {
+        text-align: left;
+        margin-left: 5.5rem;
+    }
+
+    .item li {
+        padding: 0.3rem;
+    }
+    
+
+    .ins-h3, .targetInstructions {
+        text-align: center;
+        max-height: 45%;
+    }
+
+    .ins-section {
+        width: 75%;
+        align-items: center;
+        margin: 0 auto;
+        /* border: green solid; */
+    }
+
+    .ins-h3 {
+        margin-top: 2rem;
+    }
+
+    .js-image {
+        width: 45%;
+        height: 45%;
+        margin-top: 2rem;
+        border: #724cf9 0.5rem solid;
+        border-radius: 2rem;
+    }
+
+}
